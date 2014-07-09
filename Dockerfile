@@ -26,7 +26,7 @@ RUN chmod +x /ks-bundled/launch-web.sh
 RUN apt-get update
 RUN apt-get -y install wget
 
-ENV BUILD_NUMBER 799
+ENV BUILD_NUMBER 816
 
 # download the bundled war application
 
