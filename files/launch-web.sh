@@ -1,11 +1,13 @@
 #/bin/bash
 
-if test -n $DB_PORT_1521_TCP_ADDR
+if test -n "$DB_PORT_1521_TCP_ADDR"
 then
 
 		ORACLE_DBA_URL="jdbc:oracle:thin:@${DB_PORT_1521_TCP_ADDR}:${DB_PORT_1521_TCP_PORT}:XE"
 
 fi
+
+echo "ORACLE_DBA_URL=$ORACLE_DBA_URL"
 
 MY_IP=$(/sbin/ifconfig | grep eth0 -A 1 | grep "inet addr" | awk '{print $2}' | cut -d: -f2)
 
