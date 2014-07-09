@@ -1,22 +1,30 @@
-Docker - Trusted Build for Kuali Student Bundled
-================================================
+Kuali Student Bundled Application
+=================================
 
-You can test it out by issuing:
+Expects an oracle database to be provisioned and setup with the same nightly build tag.
+
+See the instructions at https://github.com/mocleiri/ks-bundled-impex on how the database
+can be provisioned.
+
+Assuming that the db has the container name of *oracle*:
 ```
-docker run -p 8080:8080 -t hrafique/kuali-student-bundled
+$ docker run -d -t --link oracle:db mocleiri/bundled-impex-app:build-799
 ```
-Note: this will expose port `8080` from the container to port `8080` on the docker host.
 
 Following environment variables are supported:
 
 Environment Variable | Default Value | Comment
 --- | --- | ---
 `ORACLE_DBA_URL` | jdbc:oracle:thin:@localhost:1521:XE | URL to Oracle Database
-`ORACLE_DBA_PASSWORD` | manager | Oracle DBA Password
-`SKIP_DB_RESET` | false | If `true`, the database reset is skipped
+`ORACLE_DBA_PASSWORD` | oracle | Oracle DBA Password (Default is for wnameless)
 
-A full command invocation might look like:
+If the docker link is created the *ORACLE_DBA_URL* is autoconfigured based on the IPAddress of the running database container.
+
+Monitor the catalina.out file using:
+
 ```
-docker run -e ORACLE_DBA_URL=jdbc:oracle:thin:@128.x.x.x:1521:XE \
-    -e SKIP_DB_RESET=true -p 8080:8080 -t hrafique/kuali-student-bundled
+$ docker logs -f <app container id>
 ```
+
+
+
