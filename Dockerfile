@@ -1,6 +1,6 @@
-FROM hrafique/openjdk-quantal
+FROM dockerfile/java:oracle-java7
 
-MAINTAINER Haroon Rafique https://github.com/hrafique
+MAINTAINER Michael O'Cleirigh https://github.com/mocleiri
 
 RUN mkdir -p /ks-bundled/lib
 RUN mkdir -p /ks-bundled/app
@@ -26,7 +26,7 @@ RUN chmod +x /ks-bundled/launch-web.sh
 RUN apt-get update
 RUN apt-get -y install wget
 
-ENV BUILD_NUMBER 816
+ENV BUILD_NUMBER 917
 
 # download the bundled war application
 
