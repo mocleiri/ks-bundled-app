@@ -8,7 +8,7 @@ can be provisioned.
 
 Assuming that the db has the container name of *oracle*:
 ```
-$ docker run -d -t --link oracle:db mocleiri/bundled-impex-app:build-799
+$ docker run -d -t --link oracle:db kualistudent/bundled-app:build-917
 ```
 
 Following environment variables are supported:
