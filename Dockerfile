@@ -19,6 +19,7 @@ ADD files/ojdbc6_g-$OJDBC_VERSION.jar /ks-bundled/lib/ojdbc6_g-$OJDBC_VERSION.ja
 
 ADD files/launch-web.sh /ks-bundled/launch-web.sh
 ADD files/rice.keystore /ks-bundled/rice.keystore
+
 RUN chmod +x /ks-bundled/launch-web.sh
 
 # install maven
@@ -28,9 +29,11 @@ RUN apt-get -y install wget
 
 ENV BUILD_NUMBER 917
 
-# download the bundled war application
+# add in the war file parts
+ADD files/ks-with-rice-bundled-2.1.1-FR2-M1-build-${BUILD_NUMBER}.{aa,ab,ac} /ks-bundled/app/
 
-RUN wget --no-verbose -O /ks-bundled/app/ks-with-rice-bundled-2.1.1-FR2-M1-build-${BUILD_NUMBER}.war http://maven.kuali.org.s3.amazonaws.com/builds/org/kuali/student/web/ks-with-rice-bundled/2.1.1-FR2-M1-build-${BUILD_NUMBER}/ks-with-rice-bundled-2.1.1-FR2-M1-build-${BUILD_NUMBER}.war
+# reconstitute the > 100 MB file and delete the source parts
+RUN cat /ks-bundled/app/ks-with-rice-bundled-2.1.1-FR2-M1-build-${BUILD_NUMBER}.war.?? > /ks-bundled/app/ks-with-rice-bundled-2.1.1-FR2-M1-build-${BUILD_NUMBER}.war && rm /ks-bundled/app/ks-with-rice-bundled-2.1.1-FR2-M1-build-${BUILD_NUMBER}.{aa,ab,ac}
 
 # tomcat
 ENV TOMCAT_VERSION 6.0.37
@@ -57,7 +60,8 @@ ADD files/server.xml /usr/share/tomcat/conf/server.xml
 RUN cp /ks-bundled/app/*.war /usr/share/tomcat/webapps/ROOT.war
 
 RUN mkdir -p /root/kuali/main/dev
-RUN wget --no-verbose -O /root/kuali/main/dev/ks-with-rice-bundled-config.xml https://svn.kuali.org/repos/student/enrollment/ks-deployments/tags/builds/ks-deployments-2.1/2.1.1-FR2-M1/build-${BUILD_NUMBER}/ks-deployment-resources/src/main/resources/org/kuali/student/ks-deployment-resources/deploy/config/ks-with-rice-bundled-config.xml
+
+RUN wget --no-verbose -O /root/kuali/main/dev/ks-with-rice-bundled-config.xml https://github.com/kuali-student/ks-final-milestone/blob/master/ks-deployments/ks-deployment-resources/src/main/resources/org/kuali/student/ks-deployment-resources/deploy/config/ks-with-rice-bundled-config.xml
 
 EXPOSE 8080
 

@@ -1,14 +1,18 @@
 Kuali Student Bundled Application
 =================================
 
-Expects an oracle database to be provisioned and setup with the same nightly build tag.
+The Kuali Student as a Java project is now defunct but this Dockerfile will setup its final milestone, build 917 from October 2014.
+
+Originally this dockerfile would work for any build tag but the online resources have started to dissappear so its now hardcoded for the final build.
+
+The app expects an oracle database to be provisioned and setup with the same nightly build tag.
 
 See the instructions at https://github.com/mocleiri/ks-bundled-impex on how the database
 can be provisioned.
 
 Assuming that the db has the container name of *oracle*:
 ```
-$ docker run -d -t --link oracle:db kualistudent/bundled-app:build-917
+$ docker run -d -t --link oracle:db kualistudent/bundled-app
 ```
 
 Following environment variables are supported:
