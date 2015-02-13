@@ -7,13 +7,21 @@ then
 
 fi
 
-echo "ORACLE_DBA_URL=$ORACLE_DBA_URL"
+echo "ORACLE_DBA_URL=$ORACLE_DBA_URL (can be set. normally inferred from db link)"
 
 MY_IP=$(/sbin/ifconfig | grep eth0 -A 1 | grep "inet addr" | awk '{print $2}' | cut -d: -f2)
 
 echo "MY_IP=$MY_IP"
 
-PUBLIC_URL="http://$MY_IP:8080"
+
+if test -n "$PUBLIC_URL"
+then
+	PUBLIC_URL="http://$MY_IP:8080"
+fi
+
+# else use what was set in the docker run
+
+echo "PUBLIC_URL=$PUBLIC_URL (can be set through environment)"
 
 # do some substitutions
 sed -i.bak \
